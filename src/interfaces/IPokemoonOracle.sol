@@ -40,29 +40,21 @@ interface IPokemoonOracle {
     /// Returns the token data based on a given token address and chain id
     /// @param tokenAddress address of the token
     /// @param chainId chain id
-    function getTokenData(
-        address tokenAddress,
-        uint256 chainId
-    ) external view returns (TokenData memory _tokenData);
+    function getTokenData(address tokenAddress, uint256 chainId) external view returns (TokenData memory _tokenData);
 
     /// Returns the token data based on a given token address, chain id and round
     /// @param tokenAddress address of the token
     /// @param chainId chain id
     /// @param round number
-    function getTokenData(
-        address tokenAddress,
-        uint256 chainId,
-        uint256 round
-    ) external view returns (TokenData memory _tokenData);
+    function getTokenData(address tokenAddress, uint256 chainId, uint256 round)
+        external
+        view
+        returns (TokenData memory _tokenData);
 
     /// Updates the oracles token data
     /// @param tokenAddress address ot the token
     /// @param chainId chain id
     /// @param _params update parameter that should be set for the token
     /// @dev only the owner is allowed to do this
-    function updateTokenData(
-        address tokenAddress,
-        uint256 chainId,
-        UpdateTokenDataParams calldata _params
-    ) external;
+    function updateTokenData(address tokenAddress, uint256 chainId, UpdateTokenDataParams calldata _params) external;
 }

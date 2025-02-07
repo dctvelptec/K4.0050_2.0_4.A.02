@@ -84,13 +84,9 @@ contract PokemoonOracleTest is Test {
             })
         );
 
-        IPokemoonOracle.TokenData memory _tokenDataFirstRound = oracle
-            .getTokenData(address(0x1), 1, 0);
+        IPokemoonOracle.TokenData memory _tokenDataFirstRound = oracle.getTokenData(address(0x1), 1, 0);
 
-        IPokemoonOracle.TokenData memory _tokenDataLatest = oracle.getTokenData(
-            address(0x1),
-            1
-        );
+        IPokemoonOracle.TokenData memory _tokenDataLatest = oracle.getTokenData(address(0x1), 1);
 
         assertEq(_tokenDataFirstRound.supply, 1);
         assertEq(_tokenDataLatest.supply, 2);

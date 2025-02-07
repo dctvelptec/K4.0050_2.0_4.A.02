@@ -12,13 +12,7 @@ import {IPokemoonOracle} from "./interfaces/IPokemoonOracle.sol";
 /// @author Daniel Ceballos
 /// @notice An NFT which contains traits based on defined pokemon meme coins
 ///         Please look into the CONCEPT.md to get more information about it
-contract PokemoonNFT is
-    IPokemoonNFT,
-    ERC721,
-    ERC721Enumerable,
-    ERC721Burnable,
-    Ownable
-{
+contract PokemoonNFT is IPokemoonNFT, ERC721, ERC721Enumerable, ERC721Burnable, Ownable {
     IPokemoonOracle public immutable oracle;
 
     uint256 public nextTokenId = 1;
@@ -28,10 +22,7 @@ contract PokemoonNFT is
     /// @param _initialOwner owner that will be set
     /// @param _oracle address of the oracle to receive information from
     /// @dev oracle is permanent
-    constructor(
-        address _initialOwner,
-        address _oracle
-    ) ERC721("Pokemoon Memes", "PKMN") Ownable(_initialOwner) {
+    constructor(address _initialOwner, address _oracle) ERC721("Pokemoon Memes", "PKMN") Ownable(_initialOwner) {
         oracle = IPokemoonOracle(_oracle);
     }
 
@@ -55,10 +46,7 @@ contract PokemoonNFT is
         if (_ownerOf(tokenId) == address(0)) revert("token does not exist");
 
         IPokemoonOracle.TokenData storage _trait = traits[tokenId];
-        IPokemoonOracle.TokenData memory _traitIncoming = oracle.getTokenData(
-            _trait.tokenAddress,
-            _trait.chainId
-        );
+        IPokemoonOracle.TokenData memory _traitIncoming = oracle.getTokenData(_trait.tokenAddress, _trait.chainId);
 
         _trait.name = _traitIncoming.name;
         _trait.symbol = _traitIncoming.symbol;
@@ -74,32 +62,25 @@ contract PokemoonNFT is
     }
 
     /// @inheritdoc IPokemoonNFT
-    function getTrait(
-        uint256 tokenId
-    ) external view returns (IPokemoonOracle.TokenData memory _trait) {
+    function getTrait(uint256 tokenId) external view returns (IPokemoonOracle.TokenData memory _trait) {
         _trait = traits[tokenId];
     }
 
     // The following functions are overrides required by Solidity.
 
-    function _update(
-        address to,
-        uint256 tokenId,
-        address auth
-    ) internal override(ERC721, ERC721Enumerable) returns (address) {
+    function _update(address to, uint256 tokenId, address auth)
+        internal
+        override(ERC721, ERC721Enumerable)
+        returns (address)
+    {
         return super._update(to, tokenId, auth);
     }
 
-    function _increaseBalance(
-        address account,
-        uint128 value
-    ) internal override(ERC721, ERC721Enumerable) {
+    function _increaseBalance(address account, uint128 value) internal override(ERC721, ERC721Enumerable) {
         super._increaseBalance(account, value);
     }
 
-    function supportsInterface(
-        bytes4 interfaceId
-    ) public view override(ERC721, ERC721Enumerable) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view override(ERC721, ERC721Enumerable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }

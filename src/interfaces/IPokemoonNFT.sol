@@ -12,12 +12,7 @@ interface IPokemoonNFT {
     /// @param owner owner of the token
     /// @param tokenAddress address of the corresponding meme
     /// @param chainId chain id
-    event PokemoonMinted(
-        uint256 indexed tokenId,
-        address indexed owner,
-        address tokenAddress,
-        uint256 chainId
-    );
+    event PokemoonMinted(uint256 indexed tokenId, address indexed owner, address tokenAddress, uint256 chainId);
 
     /// Trait update event
     /// @param tokenId id of the token
@@ -35,7 +30,5 @@ interface IPokemoonNFT {
 
     /// Returns the current trait information of the nft
     /// @param tokenId id of the token
-    function getTrait(
-        uint256 tokenId
-    ) external view returns (IPokemoonOracle.TokenData memory _trait);
+    function getTrait(uint256 tokenId) external view returns (IPokemoonOracle.TokenData memory _trait);
 }

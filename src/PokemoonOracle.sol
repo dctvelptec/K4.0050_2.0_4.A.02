@@ -35,32 +35,26 @@ contract PokemoonOracle is IPokemoonOracle, AccessControlEnumerable {
     }
 
     /// @inheritdoc IPokemoonOracle
-    function getTokenData(
-        address tokenAddress,
-        uint256 chainId,
-        uint256 round
-    ) external view returns (TokenData memory _tokenData) {
+    function getTokenData(address tokenAddress, uint256 chainId, uint256 round)
+        external
+        view
+        returns (TokenData memory _tokenData)
+    {
         uint256 pointer = pointers[chainId][tokenAddress].get(round);
         if (pointer > 0) _tokenData = tokenData[pointer];
     }
 
     /// @inheritdoc IPokemoonOracle
-    function getTokenData(
-        address tokenAddress,
-        uint256 chainId
-    ) external view returns (TokenData memory _tokenData) {
-        uint256 pointer = pointers[chainId][tokenAddress].get(
-            pointers[chainId][tokenAddress].length() - 1
-        );
+    function getTokenData(address tokenAddress, uint256 chainId) external view returns (TokenData memory _tokenData) {
+        uint256 pointer = pointers[chainId][tokenAddress].get(pointers[chainId][tokenAddress].length() - 1);
         if (pointer > 0) _tokenData = tokenData[pointer];
     }
 
     /// @inheritdoc IPokemoonOracle
-    function updateTokenData(
-        address tokenAddress,
-        uint256 chainId,
-        UpdateTokenDataParams calldata _params
-    ) external onlyRole(ROLE_ORACLE) {
+    function updateTokenData(address tokenAddress, uint256 chainId, UpdateTokenDataParams calldata _params)
+        external
+        onlyRole(ROLE_ORACLE)
+    {
         uint256 nextRound = pointers[chainId][tokenAddress].length();
         uint256 nextPointer = tokenData.length;
 
